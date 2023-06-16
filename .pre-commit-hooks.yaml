@@ -1,0 +1,6 @@
+  - id: checkstyle-java
+    name: checkstyle-java
+    description: ''
+    entry: ./ 
+    language: script
+    require_serial: false
