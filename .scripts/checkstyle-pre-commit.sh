@@ -6,4 +6,4 @@ curl -LJO https://github.com/checkstyle/checkstyle/releases/download/checkstyle-
 ls
 
 echo "running linting command"
-java -jar checkstyle-10.12.0-all.jar -c google_checks.xml ./
+java -jar checkstyle-10.12.0-all.jar -c google_checks.xml
