@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 
 echo "Downloading checkstyle 10.12.0"
 curl -LJO https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.0/checkstyle-10.12.0-all.jar
