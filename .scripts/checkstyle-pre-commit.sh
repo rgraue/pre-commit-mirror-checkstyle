@@ -38,7 +38,7 @@ then
 fi
 
 # TODO take argument to switch config or point to local custom config.
-CONFIG="${PRE_COMMIT_DIR}/${GOOGLE_CHECKS}"
+CONFIG="${PRE_COMMIT_DIR}/${SUN_CHECKS}"
 
 echo "running checkstyle"
 java -jar "${PRE_COMMIT_DIR}/${CHECKSTYLE_JAR}" -c "${CONFIG}" **/*.java
