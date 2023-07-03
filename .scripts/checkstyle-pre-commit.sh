@@ -3,6 +3,7 @@
 # TODO
 #  Check if checkstyle jar exists in .checkstyle already. download if not. same with google_checks.
 #  then lint src/ or all of all
+set -o pipefail
 
 CHECKSTYLE_VERSION="https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.0/checkstyle-10.12.0-all.jar"
 
@@ -42,3 +43,5 @@ CONFIG="${PRE_COMMIT_DIR}/${SUN_CHECKS}"
 
 echo "running checkstyle"
 java -jar "${PRE_COMMIT_DIR}/${CHECKSTYLE_JAR}" -c "${CONFIG}" **/*.java
+
+exit 1
