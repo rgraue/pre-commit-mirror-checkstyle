@@ -81,6 +81,8 @@ ALL_FILES=$(git diff --cached --name-status)
 FILE_STATUS=false
 for FILE in $ALL_FILES
 do
+  echo "status ${FILE_STATUS}"
+  echo "file ${FILE}"
   if [[ "${FILE}" == *.java && $FILE_STATUS = true ]]
   then
     # HERE
@@ -92,11 +94,11 @@ do
   fi
 
   # set status to true if positive change on file.
-  if [[ "${FILE}" = "A" || "${FILE}" = "M" || "${FILE}" = 'R'* ]]
+  if [[ "${FILE}" = "D" || "${FILE}" = 'R'* ]]
     then
-      FILE_STATUS=true
-    else
       FILE_STATUS=false
+    else
+      FILE_STATUS=true
   fi
 done
 
