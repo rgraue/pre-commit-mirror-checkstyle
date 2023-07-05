@@ -81,10 +81,8 @@ ALL_FILES=$(git diff --cached --name-status)
 FILE_STATUS=false
 for FILE in $ALL_FILES
 do
-  if [[ "${FILE}" != "D" ]]
-    then
-      FILE_STATUS=true
-  fi
+  echo "status ${FILE_STATUS}"
+  echo "file ${FILE}"
   if [[ "${FILE}" == *.java && $FILE_STATUS = true ]]
   then
     # HERE
@@ -93,7 +91,14 @@ do
     LINT_RESULT=$(java -jar "${PRE_COMMIT_DIR}/${CHECKSTYLE_JAR}" -o "${OUTPUT_CACHE}" -c "${CHECKSTYLE_CONFIG}" "${FILE}" )
 
     cat "${OUTPUT_CACHE}" >> "${OUTPUT_FILE}"
-    FILE_STATUS=false
+  fi
+
+  # set status to true if positive change on file.
+  if [[ "${FILE}" = "A" || "${FILE}" = "M" ]]
+    then
+      FILE_STATUS=true
+    else
+      FILE_STATUS=false
   fi
 done
 
