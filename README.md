@@ -13,4 +13,4 @@ Add the following code to your repo's `.pre-commit-config.yaml`
 
 ## Notes
 
-`pre-commit` does not officially support **java** so this hook downloads all necessary files inside the repo under `.checkstyle` folder.
+`pre-commit` does not officially support **java** hooks. Java must be installed locally, and checkstyle jar and subsequent files will be saved under `~/.cache/pre-commit/checkstyle`. Files and configs will be installed during first run of hook.
