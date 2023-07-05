@@ -10,6 +10,7 @@ PRE_COMMIT_DIR=~/.cache/pre-commit/checkstyle
 CHECKSTYLE_JAR="checkstyle.jar"
 GOOGLE_CHECKS="google_checks.xml"
 SUN_CHECKS="sun_checks.xml"
+OUTPUT_CACHE="${PRE_COMMIT_DIR}/output_cache.txt"
 OUTPUT_FILE="${PRE_COMMIT_DIR}/output.txt"
 
 STRICT=false
@@ -66,13 +67,34 @@ case "${CONFIG_ARG}" in
 esac
 
 CHECKSTYLE_CONFIG="${PRE_COMMIT_DIR}/${CONFIG_ARG}"
-
 echo "running checkstyle using ${CONFIG_ARG} config"
-LINT_RESULT=$(java -jar "${PRE_COMMIT_DIR}/${CHECKSTYLE_JAR}" -o "${OUTPUT_FILE}" -c "${CHECKSTYLE_CONFIG}" **/*.java)
 
+# HERE
+# clear old output file.
+rm "${OUTPUT_FILE}"
+
+# iterate through checked in java files.
+ALL_FILES=$(git diff --cached --name-only)
+for FILE in $ALL_FILES
+do 
+  if [[ "${FILE}" == *.java ]]
+  then
+    # HERE
+    # run checkstyle command on specific file.
+    echo "linting ${FILE}"
+    LINT_RESULT=$(java -jar "${PRE_COMMIT_DIR}/${CHECKSTYLE_JAR}" -o "${OUTPUT_CACHE}" -c "${CHECKSTYLE_CONFIG}" "${FILE}" )
+
+    cat "${OUTPUT_CACHE}" >> "${OUTPUT_FILE}"
+  fi
+done
+
+# cleanup output cache
+rm "${OUTPUT_CACHE}"
+
+# sift through total output.
 ERRORS=0
 while read line; do
-# parse output lines
+  # parse output lines
   if [[ "${line}" == '[ERROR]'* ]]
   then
     ERRORS=$((ERRORS + 1))
