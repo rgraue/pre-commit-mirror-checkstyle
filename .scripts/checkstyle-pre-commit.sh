@@ -71,13 +71,21 @@ echo "running checkstyle using ${CONFIG_ARG} config"
 
 # HERE
 # clear old output file.
-rm "${OUTPUT_FILE}"
+if [ -f "${OUTPUT_FILE}" ]
+then
+  rm "${OUTPUT_FILE}"
+fi
 
 # iterate through checked in java files.
-ALL_FILES=$(git diff --cached --name-only)
+ALL_FILES=$(git diff --cached --name-status)
+FILE_STATUS=false
 for FILE in $ALL_FILES
-do 
-  if [[ "${FILE}" == *.java ]]
+do
+  if [[ "${FILE}" != "D" ]]
+    then
+      FILE_STATUS=true
+  fi
+  if [[ "${FILE}" == *.java && $FILE_STATUS = true ]]
   then
     # HERE
     # run checkstyle command on specific file.
@@ -85,11 +93,15 @@ do
     LINT_RESULT=$(java -jar "${PRE_COMMIT_DIR}/${CHECKSTYLE_JAR}" -o "${OUTPUT_CACHE}" -c "${CHECKSTYLE_CONFIG}" "${FILE}" )
 
     cat "${OUTPUT_CACHE}" >> "${OUTPUT_FILE}"
+    $FILE_STATUS=false
   fi
 done
 
 # cleanup output cache
-rm "${OUTPUT_CACHE}"
+if [ -f "${OUTPUT_CACHE}" ]
+then
+  rm "${OUTPUT_CACHE}"
+fi
 
 # sift through total output.
 ERRORS=0
@@ -108,7 +120,7 @@ while read line; do
   fi
 done < "${OUTPUT_FILE}"
 
-# if any errors set exit code to failing
+if any errors set exit code to failing
 if [ $ERRORS -gt 0 ]
 then
   EXIT_CODE=1
