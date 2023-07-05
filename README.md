@@ -9,7 +9,16 @@ Add the following code to your repo's `.pre-commit-config.yaml`
 > `- hooks:`  
 `- id: checkstyle-java`  
 `repo: https://github.com/rgraue/pre-commit-mirror-checkstyle`  
-`rev: v0.1.9`  
+`rev: v0.1.9`
+
+## Options
+
+**Config** `-c`
+- Specify the config to be used by checkstyle. `google` or `sun` only. Points to [google_checks](https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml) and [sun_checks](https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/sun_checks.xml) respectively.
+
+**Strict** `-s`
+- Specify whether to fail on `[WARN]` (warnings) as well during linting. *Default False*
+
 
 ## Notes
 
