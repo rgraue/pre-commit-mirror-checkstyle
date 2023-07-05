@@ -93,7 +93,7 @@ do
     LINT_RESULT=$(java -jar "${PRE_COMMIT_DIR}/${CHECKSTYLE_JAR}" -o "${OUTPUT_CACHE}" -c "${CHECKSTYLE_CONFIG}" "${FILE}" )
 
     cat "${OUTPUT_CACHE}" >> "${OUTPUT_FILE}"
-    $FILE_STATUS=false
+    FILE_STATUS=false
   fi
 done
 
