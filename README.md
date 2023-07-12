@@ -1,5 +1,7 @@
 # pre-commit-mirror-checkstyle
 
+***Archived and moved to [slalombuild/pre-commit-mirror-checkstyle](https://github.com/slalombuild/pre-commit-mirror-checkstyle/releases/tag/v0.1.1)***
+
 A mirror of the checkstyle linting tool for use in pre-commit hooks
 
 ## Usage
